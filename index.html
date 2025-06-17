@@ -2,70 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>One Ten Mobiles</title>
   <style>
     :root {
       --bg: #fff;
       --text: #000;
       --card-bg: #f9f9f9;
+      --accent: #25D366;
     }
     body.dark {
       --bg: #121212;
-      --text: #f0f0f0;
+      --text: #eee;
       --card-bg: #1e1e1e;
     }
     body {
       margin: 0;
-      font-family: sans-serif;
-      background-color: var(--bg);
+      font-family: Arial, sans-serif;
+      background: var(--bg);
       color: var(--text);
-      transition: background 0.3s, color 0.3s;
+      line-height: 1.4;
     }
     header, footer {
-      padding: 1rem;
       background: #111;
-      color: #fff;
+      color: white;
       text-align: center;
+      padding: 1rem;
     }
     .theme-toggle {
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 1000;
     }
     .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 60vh;
-      padding: 2rem;
-      background: linear-gradient(45deg, #0f0f0f, #1a1a1a);
-      color: #fff;
+      background: linear-gradient(135deg, #0a7700, #25D366);
+      color: white;
+      padding: 2rem 1rem;
       text-align: center;
     }
     .filters {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      margin: 1rem;
-      flex-wrap: wrap; /* added for better wrapping */
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 1rem;
     }
     .filters button {
       padding: 0.5rem 1rem;
-      border: none;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
       cursor: pointer;
-      opacity: 0.6;
-      transition: 0.3s;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
     }
-    .filters button.active {
-      background: #333;
-      color: #fff;
-      opacity: 1;
+    .filters button.active,
+    .filters button:hover {
+      background: var(--accent);
+      color: white;
     }
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
       gap: 1rem;
       padding: 1rem;
     }
@@ -74,235 +80,131 @@
       border-radius: 10px;
       padding: 1rem;
       text-align: center;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
     }
     .product img {
       width: 100%;
-      height: auto;
       border-radius: 8px;
+      object-fit: cover;
+      height: 150px;
     }
-    .product h3 { margin: 0.5rem 0; font-size: 1.2rem; }
-    .product p { margin: 0.3rem 0; font-size: 1.1rem; }
+    .product h3 {
+      margin: 0.7rem 0 0.3rem;
+    }
+    .product p {
+      margin: 0 0 0.7rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
     .product button {
-      background: #25D366;
+      background: var(--accent);
+      border: none;
       color: white;
       padding: 0.5rem 1rem;
-      border: none;
-      margin-top: 5px;
-      cursor: pointer;
       border-radius: 5px;
       font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .product button:hover {
+      background: #128c30;
+    }
+
+    /* Cart */
+    .cart-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1000;
+      display: none; /* show only on mobile */
     }
     .cart {
       position: fixed;
-      top: 0;
-      right: 0;
-      width: 250px;
+      top: 60px;
+      right: 20px;
+      width: 300px;
+      max-height: 80vh;
       background: var(--card-bg);
       color: var(--text);
-      border-left: 2px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgb(0 0 0 / 0.3);
       padding: 1rem;
-      height: 100%;
       overflow-y: auto;
-      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
       z-index: 999;
     }
-    .contact {
-      background: #f0f0f0;
-      color: #000;
-      padding: 2rem;
-      text-align: center;
+    .cart h3 {
+      margin-top: 0;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 0.5rem;
     }
-    .contact.dark {
-      background: #222;
-      color: #fff;
+    .cart ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      flex-grow: 1;
+      overflow-y: auto;
     }
-    #order-form form {
-      max-width: 400px;
-      margin: auto;
+    .cart ul li {
+      padding: 0.3rem 0;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
     }
-    #order-form input, #order-form textarea, #order-form button {
-      width: 100%;
-      padding: 0.7rem;
-      margin-bottom: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    .cart-total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 0.5rem;
+      color: var(--accent);
     }
-    #order-form button {
-      background: #25D366;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-    /* Mobile styles */
+    /* Hide cart by default on mobile */
     @media (max-width: 600px) {
-      body {
-        padding: 0 0.5rem;
-      }
-      .hero { min-height: 50vh; }
-      .hero h1 { font-size: 1.5rem; }
-      .filters button {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.9rem;
-      }
-      .product h3 {
-        font-size: 1.1rem;
-      }
-      .product p {
-        font-size: 1rem;
-      }
-      .product button {
-        font-size: 1rem;
-        padding: 0.6rem;
-      }
-      /* Cart repositioned to bottom for mobile */
       .cart {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        height: 200px;
-        border-left: none;
-        border-top: 2px solid #ccc;
-        overflow-y: auto;
-        background: var(--card-bg);
+        display: none;
+        width: 90vw;
+        right: 5vw;
+        top: 10vh;
+        max-height: 60vh;
       }
+      .cart-toggle {
+        display: block;
+      }
+    }
+
+    /* Contact section */
+    #contact {
+      background: var(--card-bg);
+      padding: 2rem 1rem;
+      text-align: center;
+      margin-top: 2rem;
+      border-top: 1px solid #ccc;
+    }
+    #contact a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #contact a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <button class="theme-toggle">Toggle Theme</button>
+  <button class="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
 
   <header>
     <h1>One Ten Mobiles</h1>
-    <p>Premium Mobile Accessories in Lahore</p>
-  </header>
-
-  <section class="hero">
-    <h1>Stylish. Reliable. Affordable.</h1>
-    <p>Shop mobile accessories that match your lifestyle.</p>
-  </section>
-
-  <div class="filters">
-    <button data-filter="all" class="active">All</button>
-    <button data-filter="cases">Cases</button>
-    <button data-filter="chargers">Chargers</button>
-    <button data-filter="cables">Cables</button>
-  </div>
-
-  <section class="products" id="products">
-    <div class="product" data-category="cases">
-      <img src="https://via.placeholder.com/200x150" alt="Stylish Phone Case">
-      <h3>Stylish Case</h3>
-      <p>Rs. 500</p>
-      <button onclick="buyNow('Stylish Case')">Buy Now via WhatsApp</button>
-    </div>
-    <div class="product" data-category="chargers">
-      <img src="https://via.placeholder.com/200x150" alt="Fast Charger">
-      <h3>Fast Charger</h3>
-      <p>Rs. 1200</p>
-      <button onclick="buyNow('Fast Charger')">Buy Now via WhatsApp</button>
-    </div>
-    <div class="product" data-category="cables">
-      <img src="https://via.placeholder.com/200x150" alt="USB-C Cable">
-      <h3>USB-C Cable</h3>
-      <p>Rs. 300</p>
-      <button onclick="buyNow('USB-C Cable')">Buy Now via WhatsApp</button>
-    </div>
-  </section>
-
-  <section class="contact" id="order-form">
-    <h2>Place Your Order</h2>
-    <form onsubmit="sendOrder(event)">
-      <input type="text" id="cust-name" placeholder="Your Name" required><br><br>
-      <input type="text" id="cust-product" placeholder="Product Name" required><br><br>
-      <input type="number" id="cust-qty" placeholder="Quantity" required min="1"><br><br>
-      <textarea id="cust-notes" rows="3" placeholder="Any Notes (optional)"></textarea><br><br>
-      <button type="submit">Send Order via WhatsApp</button>
-    </form>
-  </section>
-
-  <div class="cart" id="cart">
-    <h3>Cart (<span id="cart-count">0</span>)</h3>
-    <ul id="cart-items"></ul>
-    <p>Total: Rs. <span id="cart-total">0</span></p>
-  </div>
-
-  <section class="contact" id="contact">
-    <h2>Contact Us</h2>
-    <p>📞 <strong>+92 305 6666776</strong></p>
-    <p>📍 <a href="https://maps.app.goo.gl/GXJGTD9QX5R2NEn57" target="_blank" style="color:inherit;">Shop Location - Lahore</a></p>
-    <p>🕐 Mon–Sat: 1pm to 11pm <br> Sun: 3pm to 10pm</p>
-    <p>📱 <a href="https://wa.me/923056666776" target="_blank" style="color: #25D366;">Chat with us on WhatsApp</a></p>
-  </section>
-
-  <footer>
-    <p>© <span id="year"></span> One Ten Mobiles</p>
-  </footer>
-
-  <script defer>
-    const themeToggle = document.querySelector('.theme-toggle');
-    const prefersDark = localStorage.getItem('theme') === 'dark';
-    if (prefersDark) document.body.classList.add('dark');
-
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-      document.querySelectorAll('.contact').forEach(c => c.classList.toggle('dark'));
-    });
-
-    // Category Filter
-    document.querySelectorAll('.filters button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        document.querySelectorAll('.product').forEach(p => {
-          p.style.display = (filter === 'all' || p.dataset.category === filter) ? 'block' : 'none';
-        });
-      });
-    });
-
-    // Buy Now via WhatsApp
-    function buyNow(productName) {
-      const phone = '923056666776';
-      const message = `Hi, I'm interested in buying: ${productName}`;
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    }
-
-    // Order Form WhatsApp Sender
-    function sendOrder(e) {
-      e.preventDefault();
-      const name = document.getElementById('cust-name').value;
-      const product = document.getElementById('cust-product').value;
-      const qty = document.getElementById('cust-qty').value;
-      const notes = document.getElementById('cust-notes').value;
-
-      const msg = `New Order Request:%0AName: ${name}%0AProduct: ${product}%0AQuantity: ${qty}%0ANotes: ${notes || 'None'}`;
-      const url = `https://wa.me/923056666776?text=${msg}`;
-      window.open(url, '_blank');
-    }
-
-    // Cart functions (optional)
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    function updateCartUI() {
-      const cartList = document.getElementById('cart-items');
-      const cartCount = document.getElementById('cart-count');
-      const cartTotalEl = document.getElementById('cart-total');
-      cartList.innerHTML = '';
-      let total = 0;
-      cartItems.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} x ${item.qty}`;
-        cartList.appendChild(li);
-        total += item.price * item.qty;
-      });
-      cartCount.textContent = cartItems.reduce((sum, item) => sum + item.qty, 0);
-      cartTotalEl.textContent = total;
-    }
-
-    updateCartUI();
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+    <p>Premium Mobile
