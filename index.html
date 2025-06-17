@@ -2,209 +2,226 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>One Ten Mobiles</title>
   <style>
     :root {
       --bg: #fff;
       --text: #000;
       --card-bg: #f9f9f9;
-      --accent: #25D366;
-    }
-    body.dark {
-      --bg: #121212;
-      --text: #eee;
-      --card-bg: #1e1e1e;
     }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
+      font-family: sans-serif;
+      background-color: var(--bg);
       color: var(--text);
-      line-height: 1.4;
     }
-    header, footer {
+
+    header {
       background: #111;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-    }
-    .theme-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: var(--accent);
       color: #fff;
-      border: none;
-      padding: 0.4rem 0.8rem;
-      cursor: pointer;
-      border-radius: 5px;
-      z-index: 1000;
-    }
-    .hero {
-      background: linear-gradient(135deg, #0a7700, #25D366);
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-    .filters {
+      padding: 1rem 2rem;
       display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      padding: 1rem;
+      justify-content: space-between;
+      align-items: center;
     }
-    .filters button {
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--accent);
-      background: transparent;
-      color: var(--accent);
-      cursor: pointer;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background 0.3s, color 0.3s;
+
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
     }
-    .filters button.active,
-    .filters button:hover {
-      background: var(--accent);
+
+    .cart-btn {
+      background-color: #25D366;
+      border: none;
       color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
     }
+
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
       padding: 1rem;
     }
+
     .product {
       background: var(--card-bg);
       border-radius: 10px;
       padding: 1rem;
       text-align: center;
-      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
     }
+
     .product img {
       width: 100%;
+      height: auto;
       border-radius: 8px;
-      object-fit: cover;
-      height: 150px;
     }
+
     .product h3 {
-      margin: 0.7rem 0 0.3rem;
+      margin: 0.5rem 0;
     }
+
     .product p {
-      margin: 0 0 0.7rem;
-      font-weight: bold;
-      color: var(--accent);
+      margin: 0.3rem 0;
     }
+
     .product button {
-      background: var(--accent);
-      border: none;
+      background: #25D366;
       color: white;
       padding: 0.5rem 1rem;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .product button:hover {
-      background: #128c30;
-    }
-
-    /* Cart */
-    .cart-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--accent);
-      color: white;
       border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
+      margin-top: 5px;
       cursor: pointer;
-      z-index: 1000;
-      display: none; /* show only on mobile */
-    }
-    .cart {
-      position: fixed;
-      top: 60px;
-      right: 20px;
-      width: 300px;
-      max-height: 80vh;
-      background: var(--card-bg);
-      color: var(--text);
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgb(0 0 0 / 0.3);
-      padding: 1rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      z-index: 999;
-    }
-    .cart h3 {
-      margin-top: 0;
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 0.5rem;
-    }
-    .cart ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-      flex-grow: 1;
-      overflow-y: auto;
-    }
-    .cart ul li {
-      padding: 0.3rem 0;
-      border-bottom: 1px solid #ccc;
-      display: flex;
-      justify-content: space-between;
-    }
-    .cart-total {
-      font-weight: bold;
-      text-align: right;
-      margin-top: 0.5rem;
-      color: var(--accent);
-    }
-    /* Hide cart by default on mobile */
-    @media (max-width: 600px) {
-      .cart {
-        display: none;
-        width: 90vw;
-        right: 5vw;
-        top: 10vh;
-        max-height: 60vh;
-      }
-      .cart-toggle {
-        display: block;
-      }
+      border-radius: 5px;
     }
 
-    /* Contact section */
-    #contact {
-      background: var(--card-bg);
-      padding: 2rem 1rem;
-      text-align: center;
-      margin-top: 2rem;
-      border-top: 1px solid #ccc;
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+      padding: 1rem;
+      transition: right 0.3s ease-in-out;
+      z-index: 1000;
     }
-    #contact a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: bold;
+
+    .cart-panel.open {
+      right: 0;
     }
-    #contact a:hover {
-      text-decoration: underline;
+
+    .cart-panel h3 {
+      margin-top: 0;
     }
+
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      float: right;
+      cursor: pointer;
+    }
+
+    #cart-items {
+      list-style: none;
+      padding: 0;
+    }
+
     footer {
-      font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
+      background: #eee;
+    }
+
+    @media(max-width: 600px) {
+      header h1 {
+        font-size: 1rem;
+      }
+      .cart-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
-  <button class="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
 
   <header>
     <h1>One Ten Mobiles</h1>
-    <p>Premium Mobile
+    <button class="cart-btn" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+  </header>
+
+  <section class="products">
+    <div class="product">
+      <img src="https://via.placeholder.com/200x150" alt="Case">
+      <h3>Stylish Case</h3>
+      <p>Rs. 500</p>
+      <button onclick="addToCart('Stylish Case', 500)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://via.placeholder.com/200x150" alt="Charger">
+      <h3>Fast Charger</h3>
+      <p>Rs. 1200</p>
+      <button onclick="addToCart('Fast Charger', 1200)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://via.placeholder.com/200x150" alt="Cable">
+      <h3>USB-C Cable</h3>
+      <p>Rs. 300</p>
+      <button onclick="addToCart('USB-C Cable', 300)">Add to Cart</button>
+    </div>
+  </section>
+
+  <div class="cart-panel" id="cart">
+    <button class="close-cart" onclick="toggleCart()">✖</button>
+    <h3>Your Cart</h3>
+    <ul id="cart-items"></ul>
+    <p>Total: Rs. <span id="cart-total">0</span></p>
+    <button onclick="checkout()">Order via WhatsApp</button>
+  </div>
+
+  <footer>
+    <p>© <span id="year"></span> One Ten Mobiles</p>
+  </footer>
+
+  <script>
+    const cart = [];
+    const cartPanel = document.getElementById('cart');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const cartTotal = document.getElementById('cart-total');
+
+    function toggleCart() {
+      cartPanel.classList.toggle('open');
+    }
+
+    function addToCart(name, price) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItemsEl.innerHTML = '';
+      let total = 0;
+      let count = 0;
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} x ${item.qty}`;
+        cartItemsEl.appendChild(li);
+        total += item.price * item.qty;
+        count += item.qty;
+      });
+      cartTotal.textContent = total;
+      cartCount.textContent = count;
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Cart is empty!");
+        return;
+      }
+      let message = "Order Details:\n";
+      cart.forEach(item => {
+        message += `${item.name} x ${item.qty} = Rs. ${item.price * item.qty}\n`;
+      });
+      message += `Total = Rs. ${cart.reduce((sum, item) => sum + item.price * item.qty, 0)}`;
+      const url = `https://wa.me/923056666776?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
