@@ -1,93 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>One Ten Mobiles - Lahore</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      margin: 0;
-      padding: 0;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>One Ten Mobiles</title>
+<style>
+  /* CSS variables for light and dark theme */
+  :root {
+    --bg-color: #fff;
+    --text-color: #333;
+    --link-color: #007bff;
+    --link-hover: #0056b3;
+    --nav-bg: #111;
+    --nav-text: #fff;
+    --btn-bg: #ff4500;
+    --btn-bg-hover: #e03e00;
+    --product-border: #ddd;
+    --footer-bg: #111;
+    --footer-text: #bbb;
+  }
+  [data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #ddd;
+    --link-color: #66aaff;
+    --link-hover: #99ccff;
+    --nav-bg: #222;
+    --nav-text: #eee;
+    --btn-bg: #ff5722;
+    --btn-bg-hover: #e04e0f;
+    --product-border: #444;
+    --footer-bg: #222;
+    --footer-text: #999;
+  }
+
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  a {
+    color: var(--link-color);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+
+  /* Navigation */
+  nav {
+    position: sticky;
+    top: 0;
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 1000;
+  }
+  nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    align-items: center;
+  }
+  nav ul li {
+    font-weight: 600;
+  }
+  nav ul li a {
+    color: var(--nav-text);
+  }
+
+  /* Dark mode toggle button */
+  #dark-mode-toggle {
+    background: transparent;
+    border: 2px solid var(--nav-text);
+    color: var(--nav-text);
+    padding: 0.3rem 0.7rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  #dark-mode-toggle:hover {
+    background: var(--nav-text);
+    color: var(--nav-bg);
+  }
+
+  /* Hero Section */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('https://images.unsplash.com/photo-1512499617640-c2f999b9f7b3?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+    height: 60vh;
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem;
+    position: relative;
+  }
+  /* Overlay for hero in dark mode */
+  [data-theme="dark"] .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+  }
+  .hero > * {
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+  }
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  }
+  .hero .btn {
+    background: var(--btn-bg);
+    border: none;
+    color: white;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .hero .btn:hover {
+    background: var(--btn-bg-hover);
+  }
+
+  /* Filter Section */
+  .filter-container {
+    max-width: 1200px;
+    margin: 2rem auto 1rem;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--btn-bg);
+    background: transparent;
+    color: var(--btn-bg);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .filter-btn.active,
+  .filter-btn:hover {
+    background: var(--btn-bg);
+    color: white;
+  }
+
+  /* Products Grid */
+  .products {
+    max-width: 1200px;
+    margin: 1rem auto 3rem;
+    padding: 0 1rem;
+  }
+  .products h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 2rem;
+  }
+  .product-card {
+    border: 1px solid var(--product-border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  }
+  .product-card img {
+    width: 100%;
+    display: block;
+  }
+  .product-info {
+    padding: 1rem;
+    flex-grow: 1;
+  }
+  .product-info h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+  }
+  .product-info p {
+    margin: 0 0 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 0.9rem;
+  }
+  .product-info .price {
+    font-weight: 700;
+    color: var(--btn-bg);
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .product-info button {
+    background: var(--btn-bg);
+    border: none;
+    color: white;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .product-info button:hover {
+    background: var(--btn-bg-hover);
+  }
+
+  /* Shopping Cart Sidebar */
+  #cart {
+    position: fixed;
+    top: 0;
+    right: -320px; /* Hidden by default */
+    width: 320px;
+    height: 100%;
+    background: var(--bg-color);
+    box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+    color: var(--text-color);
+    padding: 1rem;
+    transition: right 0.3s ease;
+    z-index: 1500;
+    display: flex;
+    flex-direction: column;
+  }
+  #cart.open {
+    right: 0;
+  }
+  #cart h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--btn-bg);
+    padding-bottom: 0.5rem;
+  }
+  #cart .cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin: 1rem 0;
+  }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--product-border);
+    padding-bottom: 0.5rem;
+  }
+  .cart-item div {
+    flex: 1;
+  }
+  .cart-item .remove-btn {
+    background: transparent;
+    border: none;
+    color: var(--btn-bg);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .cart-total {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: auto;
+    border-top: 2px solid var(--btn-bg);
+    padding-top: 1rem;
+  }
+  #cart-close {
+    background: var(--btn-bg);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    align-self: flex-end;
+    margin-bottom: 1rem;
+  }
+  #cart-toggle-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--btn-bg);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 2000;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+  footer a {
+    color: var(--btn-bg);
+    margin: 0 0.5rem;
+    font-weight: 600;
+  }
+
+  /* Responsive */
+  @media(max-width: 600px) {
+    .hero h1 {
+      font-size: 2rem;
     }
-    header {
-      background: #000;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
+    .hero p {
+      font-size: 1rem;
     }
-    .container {
-      padding: 20px;
+    #cart {
+      width: 90vw;
     }
-    .product {
-      background: white;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    h1, h2 {
-      margin: 0 0 10px 0;
-    }
-    footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-    }
-    .whatsapp {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25D366;
-      color: white;
-      border-radius: 50%;
-      padding: 15px;
-      text-decoration: none;
-      font-size: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .whatsapp:hover {
-      background-color: #20b358;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>One Ten Mobiles</h1>
-    <p>Lahore | Phone Covers, Earbuds, Chargers, Cables</p>
-  </header>
 
-  <div class="container">
-    <div class="product">
-      <h2>Premium Phone Covers</h2>
-      <p>Stylish and protective covers for all major phone models.</p>
+<nav>
+  <div class="logo">One Ten Mobiles</div>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Products</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><button id="dark-mode-toggle" aria-label="Toggle dark mode">Dark Mode</button></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Your Mobile Accessories Store</h1>
+  <p>Quality mobile accessories, latest gadgets, and unbeatable prices at One Ten Mobiles.</p>
+  <button class="btn">Shop Now</button>
+</section>
+
+<!-- Filter Buttons -->
+<div class="filter-container" aria-label="Filter products by category">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="cases">Phone Cases</button>
+  <button class="filter-btn" data-filter="chargers">Chargers</button>
+  <button class="filter-btn" data-filter="earphones">Earphones</button>
+  <button class="filter-btn" data-filter="powerbanks">Power Banks</button>
+</div>
+
+<section class="products" aria-label="Product listing">
+  <h2>Featured Products</h2>
+  <div class="product-list" id="product-list">
+    <div class="product-card" data-category="cases" data-id="1" data-name="Premium Phone Case" data-price="1200">
+      <img src="https://via.placeholder.com/300x200?text=Phone+Case" alt="Phone Case" />
+      <div class="product-info">
+        <h3>Premium Phone Case</h3>
+        <p>Shockproof and stylish phone case for all models.</p>
+        <div class="price">PKR 1,200</div>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
     </div>
-    <div class="product">
-      <h2>Wireless Earbuds</h2>
-      <p>High-quality sound at an affordable price.</p>
+    <div class="product-card" data-category="chargers" data-id="2" data-name="Fast Wireless Charger" data-price="2500">
+      <img src="https://via.placeholder.com/300x200?text=Wireless+Charger" alt="Wireless Charger" />
+      <div class="product-info">
+        <h3>Fast Wireless Charger</h3>
+        <p>Charge your phone quickly and wirelessly.</p>
+        <div class="price">PKR 2,500</div>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
     </div>
-    <div class="product">
-      <h2>Fast Chargers</h2>
-      <p>Safe and reliable charging options.</p>
+    <div class="product-card" data-category="earphones" data-id="3" data-name="Bluetooth Earphones" data-price="3000">
+      <img src="https://via.placeholder.com/300x200?text=Earphones" alt="Earphones" />
+      <div class="product-info">
+        <h3>Bluetooth Earphones</h3>
+        <p>High-quality sound with noise cancellation.</p>
+        <div class="price">PKR 3,000</div>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
     </div>
-    <div class="product">
-      <h2>Durable Cables</h2>
-      <p>Type-C, Lightning, and Micro USB available.</p>
+    <div class="product-card" data-category="powerbanks" data-id="4" data-name="Portable Power Bank" data-price="1800">
+      <img src="https://via.placeholder.com/300x200?text=Power+Bank" alt="Power Bank" />
+      <div class="product-info">
+        <h3>Portable Power Bank</h3>
+        <p>Keep your devices charged on the go.</p>
+        <div class="price">PKR 1,800</div>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
     </div>
   </div>
+</section>
 
-  <footer>
-    <p><strong>Visit Us:</strong> <a href="https://maps.app.goo.gl/GXJGTD9QX5R2NEn57" style="color:#00ffcc;" target="_blank">View on Google Maps</a></p>
-    <p><strong>Hours:</strong> Mon–Sat: 1 PM – 11 PM | Sun: 3 PM – 10 PM</p>
-    <p><strong>Contact us on WhatsApp:</strong> +923056666776</p>
-    <p>&copy; 2025 One Ten Mobiles</p>
-  </footer>
+<!-- Shopping Cart Sidebar -->
+<button id="cart-toggle-btn" aria-label="Toggle shopping cart">Cart (0)</button>
+<aside id="cart" aria-label="Shopping cart" role="region" aria-live="polite">
+  <button id="cart-close" aria-label="Close cart">Close</button>
+  <h3>Your Cart</h3>
+  <div class="cart-items" id="cart-items">
+    <p>Your cart is empty.</p>
+  </div>
+  <div class="cart-total" id="cart-total">Total: PKR 0</div>
+</aside>
 
-  <a class="whatsapp" href="https://wa.me/923056666776" target="_blank" title="Chat on WhatsApp">
-    💬
-  </a>
-</body>
-</html>
+<footer>
+  <p>© 2025 One Ten Mobiles | <a href="https://maps.app.goo.gl/GXJGTD9QX5R2NEn57" target="_blank" rel="noopener noreferrer">Shop Location</a> | Contact: +92 305 6666776</p>
+  <p>
+    Follow us:
+    <a href="#" aria-label="Facebook">Facebook</a> |
+    <a href="#" aria-label="Instagram">Instagram</a> |
+    <a href="#" aria-label="WhatsApp">WhatsApp</a>
+  </p>
+</footer>
+
+<script>
+  // Dark Mode Toggle
+  const toggleBtn = document.getElementById('dark-mode-toggle');
+  const currentTheme = localStorage.getItem('theme') || 'light';
+
+  function applyTheme(theme) {
+    if(theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggleBtn.textContent = 'Light Mode';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      toggleBtn.textContent = 'Dark Mode';
+    }
+  }
+  toggleBtn.addEventListener('click', () => {
+    const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+  applyTheme(currentTheme);
+
+  // Product Filtering
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const products = document.querySelectorAll('.product-card');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+
+      products.forEach(product => {
+        if (filter === 'all' || product.dataset.category === filter) {
+          product.style.display = '';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Shopping Cart Logic
+  const cartToggleBtn = document.getElementById('cart-toggle-btn');
+  const cart = document.getElementById('cart');
+  const cartCloseBtn = document.getElementById('cart-close');
+  const cartItemsContainer = document.getElementById('cart-items');
+  const cartTotalEl = document.getElementById('cart-total');
+  const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+  let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+  function updateCartUI() {
+    cartItemsContainer.innerHTML = '';
+    if (cartItems.length === 0) {
+      cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+      cartTotalEl.textContent = 'Total: PKR 0';
+      cartToggleBtn.textContent = `Cart (0)`;
+      return;
+    }
+
+    let total = 0;
+    cartItems.forEach(item => {
+      total += item.price * item.quantity;
+
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+
+      div.innerHTML = `
+        <div>
+          <strong>${item.name}</strong> <br />
+          Quantity: ${item.quantity
