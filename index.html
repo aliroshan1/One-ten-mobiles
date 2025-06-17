@@ -4,18 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>One Ten Mobiles</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #00b894;
-      --primary-dark: #019875;
-      --bg: #f5f7fa;
+      --primary: #25D366;
+      --bg: #fefefe;
+      --text: #222;
       --card-bg: #fff;
-      --text-primary: #222;
-      --text-secondary: #555;
-      --shadow: rgba(0,0,0,0.1);
-      --transition: 0.3s ease;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     * {
@@ -24,240 +20,244 @@
 
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-family);
       background: var(--bg);
-      color: var(--text-primary);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
     header {
-      background: linear-gradient(90deg, #00b894, #019875);
+      background: var(--primary);
       color: white;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px var(--shadow);
+      box-shadow: 0 2px 6px var(--shadow);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 1100;
     }
 
     header h1 {
-      font-weight: 600;
-      font-size: 1.8rem;
-      letter-spacing: 1.5px;
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+      font-weight: 700;
     }
 
     .cart-btn {
-      background-color: white;
-      color: var(--primary-dark);
+      background-color: #128C4A;
       border: none;
-      padding: 0.5rem 1.2rem;
-      border-radius: 30px;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
       font-weight: 600;
       font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 3px 8px var(--shadow);
-      transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      box-shadow: 0 3px 8px rgba(18, 140, 74, 0.4);
+      transition: background-color 0.3s ease;
     }
+
     .cart-btn:hover {
-      background-color: var(--primary-dark);
-      color: white;
-      box-shadow: 0 5px 12px rgba(1,152,117, 0.8);
+      background-color: #0b662c;
+      box-shadow: 0 5px 12px rgba(11, 102, 44, 0.6);
     }
 
-    .products {
-      max-width: 1100px;
-      margin: 2rem auto;
+    main.products {
+      flex-grow: 1;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem;
-      padding: 0 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.3rem;
+      padding: 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .product {
+    article.product {
       background: var(--card-bg);
       border-radius: 15px;
-      padding: 1.5rem 1rem 2rem;
-      box-shadow: 0 6px 15px var(--shadow);
-      text-align: center;
-      transition: transform var(--transition), box-shadow var(--transition);
-      cursor: pointer;
+      padding: 1rem;
+      box-shadow: 0 2px 8px var(--shadow);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .product:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3);
+    article.product:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
     }
 
-    .product img {
-      max-width: 180px;
-      height: auto;
-      margin: 0 auto 1rem;
+    article.product img {
+      width: 180px;
+      height: 140px;
+      object-fit: contain;
       border-radius: 12px;
-      object-fit: cover;
+      margin-bottom: 0.8rem;
+      background: #f0f0f0;
     }
 
-    .product h3 {
+    article.product h3 {
+      font-size: 1.2rem;
+      margin: 0.5rem 0 0.3rem 0;
+      text-align: center;
+      color: #111;
+    }
+
+    article.product p {
+      margin: 0 0 1rem 0;
       font-weight: 600;
-      margin-bottom: 0.4rem;
-      font-size: 1.25rem;
-      color: var(--primary-dark);
+      color: #444;
     }
 
-    .product p {
-      margin: 0.3rem 0 1rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-    }
-
-    .product button {
+    article.product button {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       border-radius: 25px;
+      cursor: pointer;
       font-weight: 600;
       font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 184, 148, 0.4);
-      transition: background-color var(--transition), box-shadow var(--transition);
+      width: 100%;
+      box-shadow: 0 3px 8px rgba(37, 211, 102, 0.4);
+      transition: background-color 0.3s ease;
     }
 
-    .product button:hover {
-      background: var(--primary-dark);
-      box-shadow: 0 5px 15px rgba(1, 152, 117, 0.6);
+    article.product button:hover {
+      background-color: #128c4a;
+      box-shadow: 0 5px 12px rgba(18, 140, 74, 0.6);
     }
 
-    /* Cart Panel */
     .cart-panel {
       position: fixed;
       top: 0;
-      right: -350px;
-      width: 350px;
-      height: 100vh;
-      background: white;
-      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
-      padding: 2rem 1.5rem;
-      transition: right 0.4s ease-in-out;
-      z-index: 10000;
+      right: -360px;
+      width: 340px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -3px 0 15px rgba(0,0,0,0.15);
+      padding: 1.5rem 1.2rem 1rem 1.2rem;
+      transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1200;
       display: flex;
       flex-direction: column;
     }
+
     .cart-panel.open {
       right: 0;
+    }
+
+    .cart-panel h3 {
+      margin: 0 0 1rem 0;
+      font-weight: 700;
+      color: #111;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
     }
 
     .close-cart {
       background: none;
       border: none;
-      font-size: 1.8rem;
-      color: var(--primary-dark);
-      align-self: flex-end;
-      cursor: pointer;
-      transition: color var(--transition);
-    }
-    .close-cart:hover {
+      font-size: 1.5rem;
+      font-weight: 700;
       color: var(--primary);
+      cursor: pointer;
+      align-self: flex-end;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
     }
 
-    .cart-panel h3 {
-      margin-top: 0;
-      margin-bottom: 1.2rem;
-      font-weight: 700;
-      font-size: 1.8rem;
-      color: var(--primary-dark);
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 0.5rem;
+    .close-cart:hover {
+      color: #128c4a;
     }
 
     #cart-items {
       list-style: none;
       padding: 0;
+      margin: 0;
       flex-grow: 1;
       overflow-y: auto;
-      margin-bottom: 1.5rem;
     }
 
     #cart-items li {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.7rem 0;
+      padding: 0.6rem 0;
       border-bottom: 1px solid #eee;
       font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--text-primary);
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
     }
 
-    #cart-total {
+    #cart-items li span.qty {
+      color: var(--primary);
+      margin-left: 0.6rem;
       font-weight: 700;
-      font-size: 1.3rem;
-      color: var(--primary-dark);
+    }
+
+    .cart-total {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #111;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      text-align: right;
     }
 
     .checkout-btn {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 0.7rem;
-      border-radius: 30px;
+      padding: 0.75rem 1rem;
+      border-radius: 25px;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 184, 148, 0.5);
+      box-shadow: 0 5px 15px rgba(37, 211, 102, 0.5);
       transition: background-color 0.3s ease;
+      width: 100%;
     }
+
     .checkout-btn:hover {
-      background: var(--primary-dark);
+      background-color: #128c4a;
+      box-shadow: 0 8px 20px rgba(18, 140, 74, 0.6);
     }
 
     footer {
+      background: #f1f1f1;
       text-align: center;
-      padding: 1.2rem;
-      background: #e8f5f1;
-      color: var(--primary-dark);
-      font-weight: 600;
-      font-size: 0.95rem;
+      padding: 1rem 1rem;
+      font-size: 0.9rem;
+      color: #777;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
       margin-top: auto;
     }
 
-    /* Scrollbar styling for cart items */
-    #cart-items::-webkit-scrollbar {
-      width: 6px;
-    }
-    #cart-items::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 3px;
-    }
+    @media (max-width: 640px) {
+      main.products {
+        padding: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
 
-    /* Responsive */
-    @media (max-width: 500px) {
+      article.product img {
+        width: 140px;
+        height: 110px;
+      }
+
       .cart-panel {
-        width: 100vw;
+        width: 280px;
       }
-      .products {
-        gap: 1rem;
-        padding: 0 0.5rem;
-      }
-      .product {
-        padding: 1rem 0.7rem 1.5rem;
-      }
-      header h1 {
-        font-size: 1.3rem;
-      }
-      .cart-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
+
+      .cart-panel.open {
+        right: 0;
       }
     }
   </style>
@@ -266,39 +266,75 @@
 
   <header>
     <h1>One Ten Mobiles</h1>
-    <button class="cart-btn" onclick="toggleCart()">
-      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="currentColor" viewBox="0 0 24 24"><path d="M7 18c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm10-2h-9v-2h9v2zm0-4h-9v-2h9v2zm0-4h-9v-2h9v2z"/></svg>
-      Cart (<span id="cart-count">0</span>)
-    </button>
+    <button class="cart-btn" onclick="toggleCart()" aria-label="Toggle cart">🛒 Cart (<span id="cart-count">0</span>)</button>
   </header>
 
   <main class="products" aria-label="Product listings">
+
     <article class="product" tabindex="0">
       <img src="https://via.placeholder.com/180x140?text=Stylish+Case" alt="Stylish Case" />
       <h3>Stylish Case</h3>
       <p>Rs. 500</p>
       <button aria-label="Add Stylish Case to cart" onclick="addToCart('Stylish Case', 500)">Add to Cart</button>
     </article>
+
     <article class="product" tabindex="0">
       <img src="https://via.placeholder.com/180x140?text=Fast+Charger" alt="Fast Charger" />
       <h3>Fast Charger</h3>
       <p>Rs. 1200</p>
       <button aria-label="Add Fast Charger to cart" onclick="addToCart('Fast Charger', 1200)">Add to Cart</button>
     </article>
+
     <article class="product" tabindex="0">
       <img src="https://via.placeholder.com/180x140?text=USB-C+Cable" alt="USB-C Cable" />
       <h3>USB-C Cable</h3>
       <p>Rs. 300</p>
       <button aria-label="Add USB-C Cable to cart" onclick="addToCart('USB-C Cable', 300)">Add to Cart</button>
     </article>
+
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=Wireless+Earbuds" alt="Wireless Earbuds" />
+      <h3>Wireless Earbuds</h3>
+      <p>Rs. 2500</p>
+      <button aria-label="Add Wireless Earbuds to cart" onclick="addToCart('Wireless Earbuds', 2500)">Add to Cart</button>
+    </article>
+
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=Screen+Protector" alt="Screen Protector" />
+      <h3>Screen Protector</h3>
+      <p>Rs. 400</p>
+      <button aria-label="Add Screen Protector to cart" onclick="addToCart('Screen Protector', 400)">Add to Cart</button>
+    </article>
+
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=Bluetooth+Speaker" alt="Bluetooth Speaker" />
+      <h3>Bluetooth Speaker</h3>
+      <p>Rs. 3500</p>
+      <button aria-label="Add Bluetooth Speaker to cart" onclick="addToCart('Bluetooth Speaker', 3500)">Add to Cart</button>
+    </article>
+
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=Power+Bank" alt="Power Bank" />
+      <h3>Power Bank 10,000mAh</h3>
+      <p>Rs. 2200</p>
+      <button aria-label="Add Power Bank 10,000mAh to cart" onclick="addToCart('Power Bank 10,000mAh', 2200)">Add to Cart</button>
+    </article>
+
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=Car+Charger" alt="Car Charger" />
+      <h3>Car Charger</h3>
+      <p>Rs. 900</p>
+      <button aria-label="Add Car Charger to cart" onclick="addToCart('Car Charger', 900)">Add to Cart</button>
+    </article>
+
   </main>
 
-  <aside class="cart-panel" id="cart" aria-label="Shopping Cart">
-    <button class="close-cart" aria-label="Close cart" onclick="toggleCart()">✖</button>
+  <aside class="cart-panel" id="cart" aria-label="Shopping cart panel" role="region" aria-live="polite" aria-modal="true">
+    <button class="close-cart" onclick="toggleCart()" aria-label="Close cart panel">✖</button>
     <h3>Your Cart</h3>
-    <ul id="cart-items" role="list"></ul>
-    <p>Total: Rs. <span id="cart-total">0</span></p>
-    <button class="checkout-btn" onclick="checkout()">Order via WhatsApp</button>
+    <ul id="cart-items" tabindex="0"></ul>
+    <p class="cart-total">Total: Rs. <span id="cart-total">0</span></p>
+    <button class="checkout-btn" onclick="checkout()" aria-label="Order via WhatsApp">Order via WhatsApp</button>
   </aside>
 
   <footer>
@@ -332,7 +368,11 @@
       let count = 0;
       cart.forEach(item => {
         const li = document.createElement('li');
-        li.textContent = `${item.name} x ${item.qty}`;
+        li.textContent = `${item.name}`;
+        const qtySpan = document.createElement('span');
+        qtySpan.classList.add('qty');
+        qtySpan.textContent = ` x${item.qty}`;
+        li.appendChild(qtySpan);
         cartItemsEl.appendChild(li);
         total += item.price * item.qty;
         count += item.qty;
@@ -343,14 +383,14 @@
 
     function checkout() {
       if (cart.length === 0) {
-        alert("Your cart is empty!");
+        alert("Cart is empty!");
         return;
       }
-      let message = "Hello! I want to order:\n";
+      let message = "Order Details:%0A";
       cart.forEach(item => {
-        message += `${item.name} x ${item.qty} = Rs. ${item.price * item.qty}\n`;
+        message += `${item.name} x ${item.qty} = Rs. ${item.price * item.qty}%0A`;
       });
-      message += `Total: Rs. ${cart.reduce((sum, item) => sum + item.price * item.qty, 0)}`;
+      message += `Total = Rs. ${cart.reduce((sum, item) => sum + item.price * item.qty, 0)}`;
       const url = `https://wa.me/923056666776?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
     }
