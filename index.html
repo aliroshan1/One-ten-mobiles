@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>One Ten Mobiles - Premium Accessories</title>
-  <meta name="description" content="Best mobile accessories in Pakistan. Stylish cases, fast chargers, cables and more. Order via WhatsApp easily!" />
+  <title>One Ten Mobiles</title>
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary-green: #25D366;
-      --bg-gradient: linear-gradient(135deg, #6bffe0 0%, #009688 100%);
-      --text-dark: #222;
+      --primary: #00b894;
+      --primary-dark: #019875;
+      --bg: #f5f7fa;
       --card-bg: #fff;
-      --shadow: rgba(0, 0, 0, 0.1);
+      --text-primary: #222;
+      --text-secondary: #555;
+      --shadow: rgba(0,0,0,0.1);
+      --transition: 0.3s ease;
     }
 
     * {
@@ -22,421 +25,337 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text-dark);
+      background: var(--bg);
+      color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
     header {
-      background: rgba(0,0,0,0.85);
+      background: linear-gradient(90deg, #00b894, #019875);
       color: white;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 2px 8px var(--shadow);
       position: sticky;
       top: 0;
-      z-index: 1001;
-      box-shadow: 0 2px 8px var(--shadow);
+      z-index: 10;
     }
 
     header h1 {
-      margin: 0;
       font-weight: 600;
-      font-size: 1.6rem;
-      letter-spacing: 1px;
-    }
-
-    header p.tagline {
-      font-weight: 400;
-      font-size: 0.9rem;
-      color: #d1f2e0;
-      margin-left: 1rem;
-      font-style: italic;
+      font-size: 1.8rem;
+      letter-spacing: 1.5px;
     }
 
     .cart-btn {
-      background-color: var(--primary-green);
+      background-color: white;
+      color: var(--primary-dark);
       border: none;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
-      cursor: pointer;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
       font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 3px 8px var(--shadow);
+      transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 1rem;
-      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.6);
-      transition: background-color 0.3s ease;
     }
     .cart-btn:hover {
-      background-color: #1ebe57;
-    }
-
-    .cart-btn span.count {
-      background: white;
-      color: var(--primary-green);
-      font-weight: 700;
-      padding: 0 8px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      min-width: 22px;
-      text-align: center;
-    }
-
-    main {
-      flex-grow: 1;
-      padding: 2rem 1rem;
-      max-width: 1000px;
-      margin: auto;
-      width: 100%;
+      background-color: var(--primary-dark);
+      color: white;
+      box-shadow: 0 5px 12px rgba(1,152,117, 0.8);
     }
 
     .products {
+      max-width: 1100px;
+      margin: 2rem auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
+      gap: 2rem;
+      padding: 0 1rem;
     }
 
     .product {
       background: var(--card-bg);
       border-radius: 15px;
-      padding: 1rem;
-      text-align: center;
+      padding: 1.5rem 1rem 2rem;
       box-shadow: 0 6px 15px var(--shadow);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      cursor: default;
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
+
     .product:hover {
       transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3);
     }
 
     .product img {
-      width: 100%;
+      max-width: 180px;
+      height: auto;
+      margin: 0 auto 1rem;
       border-radius: 12px;
-      margin-bottom: 1rem;
       object-fit: cover;
-      height: 150px;
-      user-select: none;
     }
 
     .product h3 {
-      margin: 0 0 0.5rem 0;
       font-weight: 600;
-      font-size: 1.1rem;
-      color: #004d40;
+      margin-bottom: 0.4rem;
+      font-size: 1.25rem;
+      color: var(--primary-dark);
     }
 
     .product p {
-      margin: 0 0 1rem 0;
-      font-weight: 500;
-      font-size: 1rem;
-      color: #00796b;
+      margin: 0.3rem 0 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
     }
 
     .product button {
-      background-color: var(--primary-green);
-      border: none;
+      background: var(--primary);
       color: white;
-      padding: 0.6rem 0;
-      border-radius: 50px;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
       font-weight: 600;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.4rem;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
-    .product button:hover {
-      background-color: #1ebe57;
+      box-shadow: 0 3px 8px rgba(0, 184, 148, 0.4);
+      transition: background-color var(--transition), box-shadow var(--transition);
     }
 
+    .product button:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 5px 15px rgba(1, 152, 117, 0.6);
+    }
+
+    /* Cart Panel */
     .cart-panel {
       position: fixed;
       top: 0;
-      right: -100%;
-      width: 320px;
+      right: -350px;
+      width: 350px;
       height: 100vh;
       background: white;
-      box-shadow: -4px 0 20px rgba(0,0,0,0.15);
-      padding: 1.5rem 1.2rem 2rem;
-      transition: right 0.4s ease;
-      z-index: 1100;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+      padding: 2rem 1.5rem;
+      transition: right 0.4s ease-in-out;
+      z-index: 10000;
       display: flex;
       flex-direction: column;
     }
-
     .cart-panel.open {
       right: 0;
-    }
-
-    .cart-panel header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .cart-panel h3 {
-      margin: 0;
-      font-weight: 700;
-      font-size: 1.4rem;
-      color: #004d40;
     }
 
     .close-cart {
       background: none;
       border: none;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      align-self: flex-end;
       cursor: pointer;
-      color: #777;
-      transition: color 0.3s ease;
+      transition: color var(--transition);
     }
     .close-cart:hover {
-      color: #004d40;
+      color: var(--primary);
+    }
+
+    .cart-panel h3 {
+      margin-top: 0;
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
     }
 
     #cart-items {
-      flex-grow: 1;
-      overflow-y: auto;
       list-style: none;
       padding: 0;
-      margin: 0 0 1rem 0;
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 1.5rem;
     }
 
     #cart-items li {
-      padding: 0.8rem 0;
-      border-bottom: 1px solid #eee;
-      font-weight: 600;
-      color: #333;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 0.95rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #eee;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-primary);
     }
 
     #cart-total {
       font-weight: 700;
-      font-size: 1.2rem;
-      color: #00796b;
+      font-size: 1.3rem;
+      color: var(--primary-dark);
     }
 
     .checkout-btn {
-      background-color: var(--primary-green);
-      border: none;
-      padding: 0.75rem 0;
-      font-weight: 700;
+      background: var(--primary);
       color: white;
-      font-size: 1.1rem;
-      border-radius: 50px;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.2rem;
       cursor: pointer;
-      box-shadow: 0 6px 15px rgba(37, 211, 102, 0.8);
+      box-shadow: 0 4px 12px rgba(0, 184, 148, 0.5);
       transition: background-color 0.3s ease;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-      user-select: none;
     }
     .checkout-btn:hover {
-      background-color: #1ebe57;
+      background: var(--primary-dark);
     }
 
     footer {
-      background: rgba(255 255 255 / 0.9);
-      padding: 1rem 2rem;
       text-align: center;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #004d40;
-      box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-      margin-top: auto;
-      user-select: none;
-    }
-
-    footer .contact-info {
-      margin-top: 0.6rem;
-      font-size: 0.9rem;
-      color: #00796b;
-    }
-    footer .contact-info a {
-      color: var(--primary-green);
-      text-decoration: none;
+      padding: 1.2rem;
+      background: #e8f5f1;
+      color: var(--primary-dark);
       font-weight: 600;
-    }
-    footer .contact-info a:hover {
-      text-decoration: underline;
+      font-size: 0.95rem;
+      margin-top: auto;
     }
 
-    @media (max-width: 700px) {
+    /* Scrollbar styling for cart items */
+    #cart-items::-webkit-scrollbar {
+      width: 6px;
+    }
+    #cart-items::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
       .cart-panel {
         width: 100vw;
       }
-      main {
-        padding: 1rem 0.8rem;
+      .products {
+        gap: 1rem;
+        padding: 0 0.5rem;
       }
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
+      .product {
+        padding: 1rem 0.7rem 1.5rem;
       }
-      header p.tagline {
-        margin-left: 0;
+      header h1 {
+        font-size: 1.3rem;
+      }
+      .cart-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div>
-    <h1>One Ten Mobiles</h1>
-    <p class="tagline">Premium Accessories, Delivered Fast!</p>
-  </div>
-  <button class="cart-btn" onclick="toggleCart()" aria-label="Toggle Cart">
-    🛒 Cart <span class="count" id="cart-count">0</span>
-  </button>
-</header>
-
-<main>
-  <section class="products" aria-label="Product List">
-    <article class="product">
-      <img src="https://via.placeholder.com/300x200?text=Stylish+Case" alt="Stylish phone case" draggable="false" />
-      <h3>Stylish Case</h3>
-      <p>Rs. 500</p>
-      <button onclick="addToCart('Stylish Case', 500)" aria-label="Add Stylish Case to cart">
-        🛒 Add to Cart
-      </button>
-    </article>
-
-    <article class="product">
-      <img src="https://via.placeholder.com/300x200?text=Fast+Charger" alt="Fast charger" draggable="false" />
-      <h3>Fast Charger</h3>
-      <p>Rs. 1200</p>
-      <button onclick="addToCart('Fast Charger', 1200)" aria-label="Add Fast Charger to cart">
-        🛒 Add to Cart
-      </button>
-    </article>
-
-    <article class="product">
-      <img src="https://via.placeholder.com/300x200?text=USB-C+Cable" alt="USB-C cable" draggable="false" />
-      <h3>USB-C Cable</h3>
-      <p>Rs. 300</p>
-      <button onclick="addToCart('USB-C Cable', 300)" aria-label="Add USB-C Cable to cart">
-        🛒 Add to Cart
-      </button>
-    </article>
-  </section>
-</main>
-
-<div class="cart-panel" id="cart" aria-label="Shopping Cart" role="region" aria-live="polite">
   <header>
-    <h3>Your Cart</h3>
-    <button class="close-cart" onclick="toggleCart()" aria-label="Close Cart">✖</button>
+    <h1>One Ten Mobiles</h1>
+    <button class="cart-btn" onclick="toggleCart()">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="currentColor" viewBox="0 0 24 24"><path d="M7 18c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm10-2h-9v-2h9v2zm0-4h-9v-2h9v2zm0-4h-9v-2h9v2z"/></svg>
+      Cart (<span id="cart-count">0</span>)
+    </button>
   </header>
 
-  <ul id="cart-items" tabindex="0" aria-live="polite" aria-atomic="true"></ul>
+  <main class="products" aria-label="Product listings">
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=Stylish+Case" alt="Stylish Case" />
+      <h3>Stylish Case</h3>
+      <p>Rs. 500</p>
+      <button aria-label="Add Stylish Case to cart" onclick="addToCart('Stylish Case', 500)">Add to Cart</button>
+    </article>
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=Fast+Charger" alt="Fast Charger" />
+      <h3>Fast Charger</h3>
+      <p>Rs. 1200</p>
+      <button aria-label="Add Fast Charger to cart" onclick="addToCart('Fast Charger', 1200)">Add to Cart</button>
+    </article>
+    <article class="product" tabindex="0">
+      <img src="https://via.placeholder.com/180x140?text=USB-C+Cable" alt="USB-C Cable" />
+      <h3>USB-C Cable</h3>
+      <p>Rs. 300</p>
+      <button aria-label="Add USB-C Cable to cart" onclick="addToCart('USB-C Cable', 300)">Add to Cart</button>
+    </article>
+  </main>
 
-  <p><strong>Total:</strong> Rs. <span id="cart-total">0</span></p>
+  <aside class="cart-panel" id="cart" aria-label="Shopping Cart">
+    <button class="close-cart" aria-label="Close cart" onclick="toggleCart()">✖</button>
+    <h3>Your Cart</h3>
+    <ul id="cart-items" role="list"></ul>
+    <p>Total: Rs. <span id="cart-total">0</span></p>
+    <button class="checkout-btn" onclick="checkout()">Order via WhatsApp</button>
+  </aside>
 
-  <button class="checkout-btn" onclick="checkout()" aria-label="Checkout via WhatsApp">
-    💬 Order via WhatsApp
-  </button>
-</div>
+  <footer>
+    <p>© <span id="year"></span> One Ten Mobiles</p>
+  </footer>
 
-<footer>
-  <div>© <span id="year"></span> One Ten Mobiles</div>
-  <div class="contact-info">
-    <p>WhatsApp: <a href="https://wa.me/923056666776" target="_blank" rel="noopener">+92 305 6666776</a></p>
-    <p>Shop Hours: Mon-Sat 1pm - 11pm | Sun 3pm - 10pm</p>
-    <p><a href="https://maps.app.goo.gl/GXJGTD9QX5R2NEn57" target="_blank" rel="noopener">Find us on Google Maps</a></p>
-  </div>
-</footer>
+  <script>
+    const cart = [];
+    const cartPanel = document.getElementById('cart');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const cartTotal = document.getElementById('cart-total');
 
-<script>
-  const cart = [];
-  const cartPanel = document.getElementById('cart');
-  const cartItemsEl = document.getElementById('cart-items');
-  const cartCount = document.getElementById('cart-count');
-  const cartTotal = document.getElementById('cart-total');
-
-  function toggleCart() {
-    cartPanel.classList.toggle('open');
-  }
-
-  function addToCart(name, price) {
-    const existing = cart.find(item => item.name === name);
-    if (existing) {
-      existing.qty += 1;
-    } else {
-      cart.push({ name, price, qty: 1 });
+    function toggleCart() {
+      cartPanel.classList.toggle('open');
     }
-    updateCart();
-    if (!cartPanel.classList.contains('open')) {
-      toggleCart(); // open cart automatically on add
-    }
-  }
 
-  function updateCart() {
-    cartItemsEl.innerHTML = '';
-    let total = 0;
-    let count = 0;
-    if(cart.length === 0) {
-      const emptyMsg = document.createElement('li');
-      emptyMsg.textContent = "Your cart is empty.";
-      emptyMsg.style.fontStyle = "italic";
-      emptyMsg.style.color = "#555";
-      cartItemsEl.appendChild(emptyMsg);
-    } else {
+    function addToCart(name, price) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItemsEl.innerHTML = '';
+      let total = 0;
+      let count = 0;
       cart.forEach(item => {
         const li = document.createElement('li');
         li.textContent = `${item.name} x ${item.qty}`;
-        const priceSpan = document.createElement('span');
-        priceSpan.textContent = `Rs. ${item.price * item.qty}`;
-        li.appendChild(priceSpan);
         cartItemsEl.appendChild(li);
         total += item.price * item.qty;
         count += item.qty;
       });
+      cartTotal.textContent = total;
+      cartCount.textContent = count;
     }
-    cartTotal.textContent = total;
-    cartCount.textContent = count;
-  }
 
-  function checkout() {
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
-      return;
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      let message = "Hello! I want to order:\n";
+      cart.forEach(item => {
+        message += `${item.name} x ${item.qty} = Rs. ${item.price * item.qty}\n`;
+      });
+      message += `Total: Rs. ${cart.reduce((sum, item) => sum + item.price * item.qty, 0)}`;
+      const url = `https://wa.me/923056666776?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
     }
-    let message = "🛒 *Order Details from One Ten Mobiles:*\n\n";
-    cart.forEach(item => {
-      message += `• ${item.name} x ${item.qty} = Rs. ${item.price * item.qty}\n`;
-    });
-    message += `\n*Total = Rs. ${cart.reduce((sum, item) => sum + item.price * item.qty, 0)}*`;
-    const url = `https://wa.me/923056666776?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
-  }
 
-  // Set current year in footer
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Initialize cart display
-  updateCart();
-</script>
-
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
